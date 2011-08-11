@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS `personal_stats`;
 CREATE TABLE `personal_stats` (
   `confirmed_rewards` double DEFAULT NULL,
   `hashrate` double DEFAULT NULL,
-  `payour_history` double DEFAULT NULL,
+  `payout_history` double DEFAULT NULL,
   `total_pps_work` double DEFAULT NULL,
   `paid_pps_work` double DEFAULT NULL,
   `pps_donated` double DEFAULT NULL,
