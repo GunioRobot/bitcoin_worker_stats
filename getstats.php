@@ -31,6 +31,7 @@ $pps_shares = $json_data->PPSShares;
 $stale_shares = $json_data->staleShares;
 $workers = (array)$json_data->workers;
 $now = date('Y-m-d H:i:s');
+
 $sql = "INSERT INTO `$database`.`personal_stats` (`confirmed_rewards`,`hashrate`,`payout_history`,`total_pps_work`,`paid_pps_work`,`pps_donated`,`pps_shares`,`stale_shares`,`time`) VALUES ('$confirmed_rewards','$user_hashrate','$payout_history','$total_pps_work','$paid_pps_work','$pps_donated','$pps_shares','$stale_shares','$now')";
 //echo $sql;
 $query = mysql_query($sql);
@@ -85,6 +86,10 @@ while ($i < $count) {
 	 //echo $sql."<br />";
 	 $query = mysql_query($sql);
 	 $row = mysql_fetch_row($query);
+	 //getting previous share / stale data from the database
+
+
+	//putting new data into the database
 	 //echo ${'worker'.$i.'_name'}.' '.$row[0]."<br /><br />";
 	 if (${'worker'.$i.'_last_share'} != null) {
 	 ${'worker'.$i.'_last_share'} = date('Y-m-d H:i:s', ${'worker'.$i.'_last_share'});

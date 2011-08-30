@@ -5,39 +5,6 @@ function make_pair($time, $data) {
 		return array($time, $data);
 }
 
-function get_mtgox() {
-	echo "Running MtGox function";
-	$json_url = 'https://mtgox.com/api/0/data/ticker.php';
-	echo "<br />JSON URL: ".$json_url;
-	/*
-	$ch = curl_init( $json_url );
-
-	$options = array(
-	CURLOPT_RETURNTRANSFER => true,
-	CURLOPT_HTTPHEADER => array('Content-type: application/json'),
-	CURLOPT_SSL_VERIFYPEER =>false
-	);
-
-	curl_setopt_array( $ch, $options );
-	echo "executing curl";
-	$json_string = curl_exec($ch);
-	curl_close($ch);
-	$json_data=json_decode($json_string);
-	var_dump($json_data);
-	$mtgox_usd = $json_data->last;
-	
-	return $mtgox_usd;
-*/
-echo "<br />Running fopen<br />";
-$handle = fopen($json_url, "rb");
-    $contents = '';
-	echo "Set foprn<br />";
-while (!feof($handle)) {
-echo "<br />Running Loop<br />";
-    $contents .= fread($handle,1024);
-}
-return $contents;
-}
 
 function CurlGet($url)
    {
@@ -129,22 +96,31 @@ function get_worker_24h($id) {
 }
 function get_worker_1h($id) {
 	include "config.php";
+	date_default_timezone_set('America/Chicago');
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
 	
 	$sql = "SELECT * FROM `$database`.`worker_history` WHERE ID = $id AND  time >= (SYSDATE() - INTERVAL 1 HOUR)";
 	//echo $sql;
 	$result = mysql_query($sql, $db);
+	
+	if ($result != null) {
 	while ($row = mysql_fetch_array($result)) {
-		$time_raw[] = date(strtotime($row['time'])) *1000;
+		$time_raw[] = (date(strtotime($row['time'])) -18000)*1000;
 		$hashrate_raw[] = (double)$row['hashrate'];
 	}
+		if ($time_raw != null) {
 		$time = array_reverse($time_raw);
-		$hashrate = array_reverse($hashrate_raw);
-		
+		}
+		if ($hashrate_raw != null) {
+		$hashrate = array_reverse($hashrate_raw);}
+		if ($hashrate && $time) {
 		$data = array_map(make_pair, $time, $hashrate);
 		$data_encoded = json_encode($data);
+		}
 		//var_dump($data);
 		//var_dump($data_encoded);
+		}
+		else { $data_encoded = null;}
 		return $data_encoded;
 }
 function get_workers($i = null) {

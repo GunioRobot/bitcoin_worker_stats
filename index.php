@@ -64,7 +64,7 @@ $(document).ready(function() {
       },
       tooltip: {
 			 formatter: function() {
-            var s = '<b>' + Highcharts.dateFormat('%H:%M, %A, %b %e, %Y',this.x) +':00</b>';
+            var s = '<b>' + Highcharts.dateFormat('%H:%M, %A, %b %e, %Y',this.x) +'</b>';
 			var total = 0;
             
             $.each(this.points, function(i, point) {
@@ -99,13 +99,14 @@ $(document).ready(function() {
 		foreach($worker_names as $value) {
 			$data = get_worker_1h($i);
 			$i++;
+			if ($data != null) {
 			echo "{
 			name: '".$value."',"."
 			data: $data
 			}";
 			if ($i <= count($worker_names)) {
 			echo ",
-			";
+			";}
 			}
 		}
 		?>
