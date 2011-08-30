@@ -4,7 +4,7 @@ include 'config.php';
 $db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
 
 $json_url = 'https://arsbitcoin.com/api.php?api_key='.$api_key;
-
+$pool = "ars";
 $ch = curl_init( $json_url );
 
 $options = array(
@@ -48,7 +48,7 @@ foreach($workers as $value) {
   
   if($exists == 0) {
     //echo "INSERT INTO `$database`.`workers` (`id`, `name`) VALUES (null, '$array_keys[$i]');";
-    $sql = "INSERT INTO `$database`.`workers` (`id`, `name`) VALUES (null, '$array_keys[$i]');";
+    $sql = "INSERT INTO `$database`.`workers` (`id`, `name`, `pool`) VALUES (null, '$array_keys[$i]', '$pool');";
    $query = mysql_query($sql);
     
     echo "Added: ".$array_keys[$i];
@@ -89,7 +89,7 @@ while ($i < $count) {
 	 if (${'worker'.$i.'_last_share'} != null) {
 	 ${'worker'.$i.'_last_share'} = date('Y-m-d H:i:s', ${'worker'.$i.'_last_share'});
 	 }
-	 $sql = "INSERT INTO `$database`.`worker_history` (`id`,`alive`,`hashrate`,`shares`,`stale_shares`,`last_share_counted`,`pps_work`,`pps_donate`) VALUES ( '$row[0]','${'worker'.$i.'_alive'}','${'worker'.$i.'_hashrate'}','${'worker'.$i.'_shares'}','${'worker'.$i.'_stale'}','${'worker'.$i.'_last_share'}','${'worker'.$i.'_pps_work'}','${'worker'.$i.'_pps_donated'}')";
+	 $sql = "INSERT INTO `$database`.`worker_history` (`id`,`alive`,`hashrate`,`shares`,`stale_shares`,`last_share_counted`,`pps_work`,`pps_donate`,`time`) VALUES ( '$row[0]','${'worker'.$i.'_alive'}','${'worker'.$i.'_hashrate'}','${'worker'.$i.'_shares'}','${'worker'.$i.'_stale'}','${'worker'.$i.'_last_share'}','${'worker'.$i.'_pps_work'}','${'worker'.$i.'_pps_donated'}','$now')";
 	 $result = mysql_query($sql);
 	 $i++;
 }
