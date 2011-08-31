@@ -94,6 +94,53 @@ function get_worker_24h($id) {
 	$data = trim($data,',');
 	return $data;
 }
+
+function get_worker_uptime($id) {
+	include "config.php";
+	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
+	$hours = array(
+		0 => date('Y-m-d H', time()).":00:00",
+		1 => date('Y-m-d H', time() - (1*60*60)).":00:00",
+		2 => date('Y-m-d H', time() - (2*60*60)).":00:00",
+		3 => date('Y-m-d H', time() - (3*60*60)).":00:00",
+		4 => date('Y-m-d H', time() - (4*60*60)).":00:00",
+		5 => date('Y-m-d H', time() - (5*60*60)).":00:00",
+		6 => date('Y-m-d H', time() - (6*60*60)).":00:00",
+		7 => date('Y-m-d H', time() - (7*60*60)).":00:00",
+		8 => date('Y-m-d H', time() - (8*60*60)).":00:00",
+		9 => date('Y-m-d H', time() - (9*60*60)).":00:00",
+		10 => date('Y-m-d H', time() - (10*60*60)).":00:00",
+		11 => date('Y-m-d H', time() - (11*60*60)).":00:00",
+		12 => date('Y-m-d H', time() - (12*60*60)).":00:00",
+		13 => date('Y-m-d H', time() - (13*60*60)).":00:00",
+		14 => date('Y-m-d H', time() - (14*60*60)).":00:00",
+		15 => date('Y-m-d H', time() - (15*60*60)).":00:00",
+		16 => date('Y-m-d H', time() - (16*60*60)).":00:00",
+		17 => date('Y-m-d H', time() - (17*60*60)).":00:00",
+		18 => date('Y-m-d H', time() - (18*60*60)).":00:00",
+		19 => date('Y-m-d H', time() - (19*60*60)).":00:00",
+		20 => date('Y-m-d H', time() - (20*60*60)).":00:00",
+		21 => date('Y-m-d H', time() - (21*60*60)).":00:00",
+		22 => date('Y-m-d H', time() - (22*60*60)).":00:00",
+		23 => date('Y-m-d H', time() - (23*60*60)).":00:00",
+		24 => date('Y-m-d H', time() - (24*60*60)).":00:00"
+	);
+	$hours = array_reverse($hours);
+	$data = '';
+	$worker_names = get_worker_names();
+	$count = count($worker_names);
+	foreach ($hours as $value)
+	{
+		$sql = "SELECT alive FROM `$database`.`worker_history` WHERE ID = $id AND  time <= '$value' ORDER BY time DESC LIMIT 0,1";
+	//echo "Query: ".$sql."<br />";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_row($result);
+		$data = $data.','.(($row[0] / $count) *100);
+	}
+	$data = trim($data,',');
+	return $data;
+}
+
 function get_worker_1h($id) {
 	include "config.php";
 	date_default_timezone_set('America/Chicago');
@@ -328,7 +375,8 @@ function purge_stats($name) {
 	
 	$sql = "DELETE FROM `$database`.`worker_history` WHERE ID = $id";
 	$result = mysql_query($sql, $db);
-	
+	$sql = "DELETE * FROM `$database`.workers` WHERE id = $id";
+	$result = mysql_query($sql, $db);
 	if($result) {
 		return true;
 	}

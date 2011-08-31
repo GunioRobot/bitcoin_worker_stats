@@ -28,9 +28,13 @@ include "quick_stats.php"; ?>
 
 <div id="container">
 <h2>Last Hour</h2>
-<div id="recent_hashrate"></div>
+<div id="recent_hashrate" style="height: 300px;"></div>
 <h2>Last 24 Hours</h2>
-<div id="hashrate"></div>
+<div id="hashrate" style="height: 300px;"></div>
+<h2>24 Hour Uptime</h2>
+<div id="24huptime" style="height: 200px;"></div>
+<!--  Please consider donating! -->
+<div id="footer">Donations appreciated: 15Tn4XUacRwttf5K75jfWxpwekG2YCWPtu</div>
 <?php $times = get_times();
 
 //echo $times;
@@ -38,7 +42,7 @@ include "quick_stats.php"; ?>
 
 </div>
 <script type="text/javascript">
-var chart2;
+var chart;
 $(document).ready(function() {
    chart = new Highcharts.Chart({
       chart: {
@@ -118,7 +122,6 @@ $(document).ready(function() {
 });
 
 
-var chart;
 $(document).ready(function() {
    chart = new Highcharts.Chart({
       chart: {
@@ -144,7 +147,7 @@ $(document).ready(function() {
       },
       tooltip: {
 			 formatter: function() {
-            var s = '<b>'+ this.x +':00</b>';
+            var s = '<b>'+ (this.x +2) +':00</b>';
 			var total = 0;
             
             $.each(this.points, function(i, point) {
@@ -155,7 +158,8 @@ $(document).ready(function() {
             });
             s += '<br/>Total: '+ total +' mh/s';
             return s;
-        },abled: true,
+        },
+		enabled: true,
 		shared: true,
 		crosshairs: true
       },
@@ -195,6 +199,81 @@ $(document).ready(function() {
    
 });
 
+
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: '24huptime',
+         defaultSeriesType: 'area'
+      },
+	  credits: {
+	  enabled: false
+	  },
+      title: {
+         text: '24 Hour Uptime'
+      },
+      subtitle: {
+         text: 'Source: Mining Pool APIs'
+      },
+      xAxis: {
+         categories: [<?php echo $times; ?>]
+      },
+      yAxis: {
+         title: {
+            text: 'Alive (%)'
+         },
+		 max: 100,
+		 tickInterval: 25
+      },
+      tooltip: {
+			 formatter: function() {
+            var s = '<b>'+ this.x +':00</b>: ';
+            var total = 0;
+            $.each(this.points, function(i, point) {
+				total = total + point.y;
+            });
+			s += total + '%';
+            return s;
+        },
+		enabled: true,
+		shared: true,
+		crosshairs: true
+      },
+     plotOptions: {
+         area: {
+            stacking: 'normal',
+            lineColor: '#666666',
+            lineWidth: 1,
+            marker: {
+               lineWidth: 1,
+               lineColor: '#666666'
+            }
+         }
+      },
+      series: [
+		<?php
+		
+		$i = 1;
+		$current_hashrate = 0;
+		foreach($worker_names as $value) {
+			$data = get_worker_uptime($i);
+			$i++;
+			echo "{
+			name: '".$value."',"."
+			data: [".$data."]
+			}";
+			if ($i <= count($worker_names)) {
+			echo ",
+			";
+			}
+		}
+		?>
+         
+	  ]
+   });
+   
+   
+});
 </script>
 </body>
 </html>
