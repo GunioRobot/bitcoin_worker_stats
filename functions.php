@@ -19,7 +19,7 @@ function CurlGet($url)
         $output = file_get_contents($url, FALSE, $context);
         return $output;
      }
-	 
+
 function get_times() {
 	$now = date('H', time());
 	$_24 = date('H', time() - (24*60*60));
@@ -46,7 +46,7 @@ function get_times() {
 	$_3 = date('H', time() - (3*60*60));
 	$_2 = date('H', time() - (2*60*60));
 	$_1 = date('H', time() - (1*60*60));
-	
+
 	$times = $_24.','.$_23.','.$_22.','.$_21.','.$_20.','.$_19.','.$_18.','.$_17.','.$_16.','.$_15.','.$_14.','.$_13.','.$_12.','.$_11.','.$_10.','.$_9.','.$_8.','.$_7.','.$_6.','.$_5.','.$_4.','.$_3.','.$_2.','.$_1.','.$now;
 	return $times;
 }
@@ -145,11 +145,11 @@ function get_worker_1h($id) {
 	include "config.php";
 	date_default_timezone_set('America/Chicago');
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$sql = "SELECT * FROM `$database`.`worker_history` WHERE ID = $id AND  time >= (SYSDATE() - INTERVAL 1 HOUR)";
 	//echo $sql;
 	$result = mysql_query($sql, $db);
-	
+
 	if ($result != null) {
 	while ($row = mysql_fetch_array($result)) {
 		$time_raw[] = (date(strtotime($row['time'])) -18000)*1000;
@@ -174,14 +174,14 @@ function get_workers($i = null) {
 include "config.php";
 if ($i == null) {
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$i = 0;
 	//get worker names
 	$sql = "SELECT * FROM `$database`.`workers`";
 	//echo $sql."<br />";
 	$result = mysql_query($sql, $db);
 	//var_dump($result);
-	
+
 	$count = 0;
 	while($row = mysql_fetch_array($result)) {
 		${'worker'.$i.'name'} = $row['name'];
@@ -189,7 +189,7 @@ if ($i == null) {
 		$i++;
 		$count++;
 	}
-	
+
 	//get worker history
 	$i=0;
 	//if ($start == null) {
@@ -198,13 +198,13 @@ if ($i == null) {
 	//else {
 	//$sql = "SELECT * FROM `$database`.`worker_history` WHERE `time` > '$start'";
 	//}
-	
+
 	$result = mysql_query($sql, $db);
 	//var_dump($result);
 	while($row = mysql_fetch_array($result)) {
 	$id = $row['id'] -1;
 	//echo "<br />".${'worker'.$id.'name'}.": ".$row['shares']." ID: ".$id."<br />";
-		
+
 		${'worker'.$id.'_shares_raw'}[] = (double)$row['shares'];
 		${'worker'.$id.'_stales_raw'}[] = (double)$row['stale_shares'];
 		${'worker'.$id.'_hashrate_raw'}[] = (double)$row['hashrate'];
@@ -213,7 +213,7 @@ if ($i == null) {
 	//var_dump(${'worker0_shares_raw'});
 	$i = 0;
 	$data;
-	
+
 	while ($i < $count) {
 		//echo "<br /><br />".${'worker'.$i.'name'}. ": ";
 		//var_dump(${'worker'.$i.'_shares_raw'});
@@ -223,16 +223,16 @@ if ($i == null) {
 		${'worker'.$i.'_stales'} = array_reverse(${'worker'.$i.'_stales_raw'});
 		${'worker'.$i.'_hashrate'} = array_reverse(${'worker'.$i.'_hashrate_raw'});
 		${'worker'.$i.'_time'} = array_reverse(${'worker'.$i.'_time_raw'});
-		
+
 		${'worker'.$i} = array( 'shares'=>${'worker'.$i.'_shares'}, 'stales' => ${'worker'.$i.'_stales'}, 'hashrate' =>${'worker'.$i.'_hashrate'}, 'time'=>${'worker'.$i.'_time'});
 		//var_dump(${'worker'.$i});
 		$data[${'worker'.$i.'name'}] = ${'worker'.$i};
 		$i++;
 	}
-	
+
 	$i = 0;
 	mysql_close();
-	
+
 	//$data = 0;
 	}
 	return $data;
@@ -241,14 +241,14 @@ if ($i == null) {
 function get_worker_names() {
 include "config.php";
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$i = 0;
 	//get worker names
 	$sql = "SELECT * FROM `$database`.`workers`";
 	//echo $sql."<br />";
 	$result = mysql_query($sql, $db);
 	//var_dump($result);
-	
+
 	$count = 0;
 	while ($row = mysql_fetch_array($result))
 	{
@@ -265,7 +265,7 @@ include "config.php";
 function get_worker_hashrate($id, $interval = "1 DAY") {
 	include "config.php";
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$sql = "SELECT hashrate FROM `$database`.`worker_history` WHERE ID = $id AND  time >= (SYSDATE() - INTERVAL $interval)";
 	//echo $sql;
 	$result = mysql_query($sql, $db);
@@ -289,7 +289,7 @@ function get_worker_hashrate($id, $interval = "1 DAY") {
 function get_average_hashrate() {
 	include "config.php";
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$sql = "SELECT hashrate FROM `$database`.`worker_history`";
 	//echo $sql;
 	$result = mysql_query($sql, $db);
@@ -321,14 +321,14 @@ function get_pool($id) {
 
 	include "config.php";
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$i = 0;
 	//get worker names
 	$sql = "SELECT * FROM `$database`.`workers` WHERE id = $id";
 	//echo $sql."<br />";
 	$result = mysql_query($sql, $db);
 	//var_dump($result);
-	
+
 	$count = 0;
 	while ($row = mysql_fetch_array($result))
 	{
@@ -344,7 +344,7 @@ function get_pool($id) {
 function get_shares($id) {
 include "config.php";
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$sql = "SELECT shares FROM `$database`.`worker_history` WHERE ID = $id ORDER BY time DESC LIMIT 0,1";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_row($result);
@@ -354,7 +354,7 @@ include "config.php";
 function get_stales($id) {
 include "config.php";
 	$db = mysql_connect($host,$dbuser,$dbpassword) or die("Failed to connect to database");
-	
+
 	$sql = "SELECT stale_shares FROM `$database`.`worker_history` WHERE ID = $id ORDER BY ID DESC LIMIT 0,1";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_row($result);
@@ -372,7 +372,7 @@ function purge_stats($name) {
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_row($result);
 	$id = $row[0];
-	
+
 	$sql = "DELETE FROM `$database`.`worker_history` WHERE ID = $id";
 	$result = mysql_query($sql, $db);
 	$sql = "DELETE * FROM `$database`.workers` WHERE id = $id";
@@ -383,6 +383,6 @@ function purge_stats($name) {
 	else {
 		return false;
 	}
-	
+
 }
 ?>

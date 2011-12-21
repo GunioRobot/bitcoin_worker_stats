@@ -46,12 +46,12 @@ foreach($workers as $value) {
   $query = mysql_query($sql);
   $exists = @mysql_num_rows($query);
   //var_dump($exists);
-  
+
   if($exists == 0) {
     //echo "INSERT INTO `$database`.`workers` (`id`, `name`) VALUES (null, '$array_keys[$i]');";
     $sql = "INSERT INTO `$database`.`workers` (`id`, `name`, `pool`) VALUES (null, '$array_keys[$i]', '$pool');";
    $query = mysql_query($sql);
-    
+
     echo "Added: ".$array_keys[$i];
     echo "<br>";
   }

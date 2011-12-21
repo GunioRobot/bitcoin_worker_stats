@@ -10,7 +10,7 @@ foreach($worker_names as $value) {
 	$current_hashrate += get_current_hashrate($i);
 	$i++;
 	}
-	
+
 	$json_string= CurlGet($json_url);
 	$json_data=json_decode($json_string);
 

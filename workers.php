@@ -17,8 +17,8 @@ foreach($worker_names as $value) {
 	$current_hashrate += get_current_hashrate($i);
 	$i++;
 	}
-	
-	
+
+
 ?>
 <?php include "nav.php"; ?>
 <?php include "quick_stats.php"; ?>

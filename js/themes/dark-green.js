@@ -4,7 +4,7 @@
  */
 
 Highcharts.theme = {
-	colors: ["#DDDF0D", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", 
+	colors: ["#DDDF0D", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
 		"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
 	chart: {
 		backgroundColor: {
@@ -28,7 +28,7 @@ Highcharts.theme = {
 		}
 	},
 	subtitle: {
-		style: { 
+		style: {
 			color: '#666666',
 			font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
 		}
@@ -50,7 +50,7 @@ Highcharts.theme = {
 				fontSize: '12px',
 				fontFamily: 'Trebuchet MS, Verdana, sans-serif'
 
-			}				
+			}
 		}
 	},
 	yAxis: {
@@ -70,7 +70,7 @@ Highcharts.theme = {
 				fontWeight: 'bold',
 				fontSize: '12px',
 				fontFamily: 'Trebuchet MS, Verdana, sans-serif'
-			}				
+			}
 		}
 	},
 	legend: {
@@ -86,7 +86,7 @@ Highcharts.theme = {
 		}
 	},
 	toolbar: {
-		itemStyle: { 
+		itemStyle: {
 			color: 'silver'
 		}
 	},
@@ -112,7 +112,7 @@ Highcharts.theme = {
 		candlestick: {
 			lineColor: 'white'
 		}
-	},		
+	},
 	legend: {
 		itemStyle: {
 			color: '#CCC'
@@ -134,7 +134,7 @@ Highcharts.theme = {
 			color: '#CCC'
 		}
 	},
-	
+
 	navigation: {
 		buttonOptions: {
 			backgroundColor: {
@@ -149,7 +149,7 @@ Highcharts.theme = {
 			hoverSymbolStroke: '#FFFFFF'
 		}
 	},
-	
+
 	exporting: {
 		buttons: {
 			exportButton: {
@@ -160,7 +160,7 @@ Highcharts.theme = {
 			}
 		}
 	},
-	
+
 	// scroll charts
 	rangeSelector: {
 		buttonTheme: {
@@ -203,7 +203,7 @@ Highcharts.theme = {
 						color: 'yellow'
 					}
 				}
-			}					
+			}
 		},
 		inputStyle: {
 			backgroundColor: '#333',
@@ -213,7 +213,7 @@ Highcharts.theme = {
 			color: 'silver'
 		}
 	},
-	
+
 	navigator: {
 		handles: {
 			backgroundColor: '#666',
@@ -226,7 +226,7 @@ Highcharts.theme = {
 			lineColor: '#A6C7ED'
 		}
 	},
-	
+
 	scrollbar: {
 		barBackgroundColor: {
 				linearGradient: [0, 0, 0, 20],
@@ -255,7 +255,7 @@ Highcharts.theme = {
 		},
 		trackBorderColor: '#666'
 	},
-	
+
 	// special colors for some of the
 	legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
 	legendBackgroundColorSolid: 'rgb(35, 35, 70)',

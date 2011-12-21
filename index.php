@@ -70,11 +70,11 @@ $(document).ready(function() {
 			 formatter: function() {
             var s = '<b>' + Highcharts.dateFormat('%H:%M, %A, %b %e, %Y',this.x) +'</b>';
 			var total = 0;
-            
+
             $.each(this.points, function(i, point) {
                 s += '<br/><span style=" color: ' + this.series.color + ';">'+ point.series.name +':</span> '+
                     point.y +' mh/s';
-					
+
                 total = total + point.y;
             });
             s += '<br/>Total: '+ total +' mh/s';
@@ -97,7 +97,7 @@ $(document).ready(function() {
       },
       series: [
 		<?php
-		
+
 		$i = 1;
 		$current_hashrate = 0;
 		foreach($worker_names as $value) {
@@ -114,11 +114,11 @@ $(document).ready(function() {
 			}
 		}
 		?>
-         
+
 	  ]
    });
-   
-   
+
+
 });
 
 
@@ -149,11 +149,11 @@ $(document).ready(function() {
 			 formatter: function() {
             var s = '<b>'+ (this.x +2) +':00</b>';
 			var total = 0;
-            
+
             $.each(this.points, function(i, point) {
                 s += '<br/><span style=" color: ' + this.series.color + ';">'+ point.series.name +':</span> '+
                     point.y +' mh/s';
-					
+
                 total = total + point.y;
             });
             s += '<br/>Total: '+ total +' mh/s';
@@ -176,7 +176,7 @@ $(document).ready(function() {
       },
       series: [
 		<?php
-		
+
 		$i = 1;
 		$current_hashrate = 0;
 		foreach($worker_names as $value) {
@@ -192,11 +192,11 @@ $(document).ready(function() {
 			}
 		}
 		?>
-         
+
 	  ]
    });
-   
-   
+
+
 });
 
 
@@ -252,7 +252,7 @@ $(document).ready(function() {
       },
       series: [
 		<?php
-		
+
 		$i = 1;
 		$current_hashrate = 0;
 		foreach($worker_names as $value) {
@@ -268,11 +268,11 @@ $(document).ready(function() {
 			}
 		}
 		?>
-         
+
 	  ]
    });
-   
-   
+
+
 });
 </script>
 </body>
